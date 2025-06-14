@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-service
+  namespace: library-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-service
+  template:
+    metadata:
+      labels:
+        app: eureka-service
+    spec:
+      containers:
+      - name: eureka-service
+        image: library-system/eureka-service:latest
+        ports:
+        - containerPort: 8061
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "k8s"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-service
+  namespace: library-system
+spec:
+  selector:
+    app: eureka-service
+  ports:
+  - port: 8061
+    targetPort: 8061
+  type: ClusterIP
