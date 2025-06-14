@@ -70,6 +70,8 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+          value: "http://service-discovery-service.ecommerce-microservices.svc.cluster.local:8761/eureka"
 
 ---
 apiVersion: v1
@@ -109,6 +111,8 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+          value: "http://service-discovery-service.ecommerce-microservices.svc.cluster.local:8761/eureka"
 
 ---
 apiVersion: v1
@@ -149,6 +153,8 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+          value: "http://service-discovery-service.ecommerce-microservices.svc.cluster.local:8761/eureka"
 
 ---
 apiVersion: v1
