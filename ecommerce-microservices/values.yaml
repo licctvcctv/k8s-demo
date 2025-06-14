@@ -1,0 +1,105 @@
+# Helm Values for E-Commerce Microservices
+# 全局配置
+global:
+  namespace: ecommerce-microservices
+  imageRegistry: selimhorri
+  imageTag: "0.1.0"
+  springProfile: k8s
+
+# 服务发现配置
+serviceDiscovery:
+  enabled: true
+  replicas: 1
+  image: service-discovery-ecommerce-boot
+  port: 8761
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# 配置中心配置
+cloudConfig:
+  enabled: true
+  replicas: 1
+  image: cloud-config-ecommerce-boot
+  port: 9296
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# API网关配置
+apiGateway:
+  enabled: true
+  replicas: 2
+  image: api-gateway-ecommerce-boot
+  port: 8080
+  service:
+    type: LoadBalancer
+  ingress:
+    enabled: true
+    host: ecommerce-api.local
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# 用户服务配置
+userService:
+  enabled: true
+  replicas: 2
+  image: user-service-ecommerce-boot
+  port: 8700
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# 业务服务配置
+businessServices:
+  productService:
+    enabled: true
+    replicas: 2
+    image: product-service-ecommerce-boot
+    port: 8500
+  
+  orderService:
+    enabled: true
+    replicas: 2
+    image: order-service-ecommerce-boot
+    port: 8300
+  
+  paymentService:
+    enabled: true
+    replicas: 2
+    image: payment-service-ecommerce-boot
+    port: 8400
+  
+  shippingService:
+    enabled: true
+    replicas: 2
+    image: shipping-service-ecommerce-boot
+    port: 8600
+
+# 监控配置
+monitoring:
+  zipkin:
+    enabled: true
+    replicas: 1
+    image: openzipkin/zipkin
+    tag: latest
+    port: 9411
+    service:
+      type: LoadBalancer
