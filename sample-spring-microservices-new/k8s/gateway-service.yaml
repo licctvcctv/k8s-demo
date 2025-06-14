@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service
+  namespace: library-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+    spec:
+      containers:
+      - name: gateway-service
+        image: library-system/gateway-service:latest
+        ports:
+        - containerPort: 8060
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "k8s"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: library-system
+spec:
+  selector:
+    app: gateway-service
+  ports:
+  - port: 8060
+    targetPort: 8060
+    nodePort: 30999
+  type: NodePort
